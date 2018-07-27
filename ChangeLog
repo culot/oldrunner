@@ -1,0 +1,20 @@
+2012-01-31  Frederic Culot  <frederic@culot.org>
+
+	* Fix a display issue which caused part of the game board to be
+	hidden on wide screens.
+
+	* Fix an erroneous check which could lead to an out of bounds
+	access on the curlvl->lay array.
+
+2012-01-06  Frederic Culot  <frederic@culot.org>
+
+	* Fix the sprite enum to avoid indexes past the end of arrays such
+	as with the SP_INVALID element in sprites_init().
+
+2010-07-17  Frederic Culot  <frederic@culot.org>
+
+	* first public release
+
+2010-04-01  Frederic Culot  <frederic@culot.org>
+
+	* beginning of the project

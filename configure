@@ -1,0 +1,78 @@
+#!/bin/sh
+#  $Id: configure,v 1.1.1.1 2010/07/17 17:30:32 culot Exp $
+#
+# This configure script was greatly inspired by the script distributed with tmux
+# from Nicholas Marriott. The license from the original script is reproduced
+# below:
+#
+# Copyright (c) 2009 Nicholas Marriott <nicm@users.sourceforge.net>
+#
+# Permission to use, copy, modify, and distribute this software for any
+# purpose with or without fee is hereby granted, provided that the above
+# copyright notice and this permission notice appear in all copies.
+#
+# THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+# WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+# MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+# ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+# WHATSOEVER RESULTING FROM LOSS OF MIND, USE, DATA OR PROFITS, WHETHER
+# IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING
+# OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+#
+
+OLDRUNNER_PLATFORM=${OLDRUNNER_PLATFORM:-`uname -s`}
+
+CONFIG_H=config.h
+rm -f $CONFIG_H
+echo "/* $OLDRUNNER_PLATFORM */" >$CONFIG_H
+
+CONFIG_MK=config.mk
+rm -f $CONFIG_MK
+echo "# $OLDRUNNER_PLATFORM" >$CONFIG_MK
+
+cat <<EOF >>$CONFIG_H
+#undef HAVE_CURSES_H
+#undef HAVE_NCURSES_H
+#undef HAVE_NCURSES_NCURSES_H
+#undef HAVE_NCURSESW_NCURSES_H
+#undef HAVE_BZERO
+#undef HAVE_FGETLN
+#undef HAVE_QUEUE_H
+#undef HAVE_STRTONUM
+EOF
+
+case $OLDRUNNER_PLATFORM in
+# ------------------------------------------------------------------------------
+    OpenBSD|FreeBSD)
+	cat <<EOF >>$CONFIG_H
+#define HAVE_CURSES_H
+#define HAVE_BZERO
+#define HAVE_FGETLN
+#define HAVE_QUEUE_H
+#define HAVE_STRTONUM
+EOF
+	cat <<EOF >>$CONFIG_MK
+LIBS+= -lcurses
+EOF
+	;;
+# ------------------------------------------------------------------------------
+    Linux)
+	cat <<EOF >>$CONFIG_H
+#define HAVE_NCURSES_H
+#define HAVE_BZERO
+EOF
+	cat <<EOF >>$CONFIG_MK
+CFLAGS+= -std=c99 -D_GNU_SOURCE -D_POSIX_SOURCE
+LIBS+= -lncurses
+SRCS+= compat/fgetln.c  \
+       compat/strtonum.c
+EOF
+	;;
+# ------------------------------------------------------------------------------
+    *)
+	echo Unable to configure for $OLDRUNNER_PLATFORM
+	exit 1
+esac
+
+echo Configured for $OLDRUNNER_PLATFORM
+exit 0

@@ -1,0 +1,13 @@
+ 
+  oldrunner TODO list
+  -------------------
+
+Here are listed the modifications I should perform on loderunner in future
+releases. Feel free to send me an email/patch (frederic@culot.org) if you
+would like to see a feature added.
+
+
+  *  Add a command-line flag to set game difficulty (acting on FOES_DELAY, BRICK_LATENCY...)
+  *  Add support for high-scores recording
+  *  Allow user to pause the game
+  *  Make it possible to load user-created levels

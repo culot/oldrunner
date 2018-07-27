@@ -1,0 +1,21 @@
+Oldrunner is a text-mode remake of the Loadrunner game from Broderbund and
+contains the 150 original game levels. See the manpage for more information.
+
+INSTALL
+  To compile oldrunner, first run the configure script and then compile the 
+  game using 'gmake' or 'make' depending on your system.
+
+LICENSE
+  The game is released under the BSD License. The original game levels are
+  copyright (c)1994 Presage Software Development Co.; all rights reserved.
+
+THANKS
+  Thanks go to:
+
+  * Joshua Neal for the 'lodetool' software which allowed the convertion of
+    the original game levels to human-readable ascii ones.
+
+  * Nicholas Marriott for the tmux configuration script which greatly inspired
+    the configure script distributed with oldrunner.
+
+
