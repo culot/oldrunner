@@ -1,4 +1,6 @@
 /*  $Id: money.c,v 1.1.1.1 2010/07/17 17:30:32 culot Exp $  */
+/* vim: et ai sts=2 ts=2 sw=2:
+ * */
 
 /*
  * Copyright (c) 2010 Frederic Culot <frederic@culot.org>
@@ -51,7 +53,7 @@ money_free (void)
   while (!SLIST_EMPTY (&money_list))
     {
       struct money *m;
-      
+
       m = SLIST_FIRST (&money_list);
       SLIST_REMOVE_HEAD (&money_list, moneyp);
       xfree (m);
@@ -72,7 +74,7 @@ void
 money_draw (void)
 {
   struct money  *m;
-  
+
   SLIST_FOREACH (m, &money_list, moneyp)
     gfx_show_sprite (SP_MONEY, &m->pos);
 }
@@ -81,7 +83,7 @@ void
 money_check_at (const struct coord *hero_pos)
 {
   struct money *m;
-  
+
   SLIST_FOREACH (m, &money_list, moneyp)
     {
       if (coord_equal (&m->pos, hero_pos))

@@ -1,4 +1,6 @@
 /*  $Id: foes.c,v 1.1.1.1 2010/07/17 17:30:32 culot Exp $  */
+/* vim: et ai sts=2 ts=2 sw=2:
+ * */
 
 /*
  * Copyright (c) 2010 Frederic Culot <frederic@culot.org>
@@ -57,7 +59,7 @@ foes_free (void)
   while (!SLIST_EMPTY (&foes))
     {
       struct foe *f;
-      
+
       f = SLIST_FIRST (&foes);
       SLIST_REMOVE_HEAD (&foes, foesp);
       xfree (f);
@@ -166,14 +168,14 @@ compute_move (const struct coord *hero, struct foe *foe)
   struct coord dpos;
 
   if (foe->current_move == MOV_FALL)
-    coord_compute (&foe->pos, foe->current_move, &foe->pos);    
+    coord_compute (&foe->pos, foe->current_move, &foe->pos);
   else
     {
       coord_diff (hero, &foe->pos, &dpos);
       if (dpos.y != 0)
         {
           enum move wanted_dir, prefered_move;
-          
+
           if (foe->current_move != MOV_LEFT && foe->current_move != MOV_RIGHT)
             prefered_move = dpos.x >= 0 ? MOV_RIGHT : MOV_LEFT;
           else
@@ -203,7 +205,7 @@ static void
 try_escape (struct foe *f)
 {
   struct coord posorig;
-  
+
   if (!timer_delay_elapsed (&f->timer, FOES_ESCAPE_DELAY))
     return;
 
@@ -217,9 +219,9 @@ static void
 update_foe_pos (const struct coord *hero_pos, struct foe *f)
 {
   struct coord posorig;
-  
+
   coord_set_yx (&posorig, f->pos.y, f->pos.x);
-  compute_move (hero_pos, f);  
+  compute_move (hero_pos, f);
   if (!coord_equal (&posorig, &f->pos)
       && lvl_valid_move (&posorig, f->current_move, &f->pos, SP_FOE)
       && !another_foe_at_pos (f, &f->pos))
@@ -255,7 +257,7 @@ foes_update_pos (void)
   timer_get_time (&now);
   if (timer_diff (&now, &foes_timer) < FOES_DELAY)
     return;
-  
+
   hero_get_pos (&hero_pos);
 
   SLIST_FOREACH (foe, &foes, foesp)
@@ -263,7 +265,7 @@ foes_update_pos (void)
       struct coord foe_prevpos;
 
       coord_set_yx (&foe_prevpos, foe->pos.y, foe->pos.x);
-      
+
       if (foe->state & STATE_TRAPPED)
         try_escape (foe);
       else
@@ -285,6 +287,6 @@ foes_wallup_at (const struct coord *pos)
           return 1;
         }
     }
-  
+
   return 0;
 }

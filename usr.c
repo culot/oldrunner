@@ -1,4 +1,6 @@
 /*  $Id: usr.c,v 1.1.1.1 2010/07/17 17:30:32 culot Exp $  */
+/* vim: et ai sts=2 ts=2 sw=2:
+ * */
 
 /*
  * Copyright (c) 2010 Frederic Culot <frederic@culot.org>
@@ -87,7 +89,7 @@ usr_input (void)
         case ORKEY_DIG_RIGHT:
           hero_dig (MOV_RIGHT);
           break;
-          
+
         case ORKEY_LEVEL_NEXT:
           lvl_load_next ();
           break;
@@ -98,7 +100,7 @@ usr_input (void)
         case ORKEY_SUICIDE:
           hero_die ();
           break;
-          
+
         default:
           /*
            * No action were performed by the user in the time interval.
