@@ -215,10 +215,11 @@ try_escape (struct foe *f)
   f->state &= ~STATE_TRAPPED;
 }
 
-static void
+static int
 update_foe_pos (const struct coord *hero_pos, struct foe *f)
 {
   struct coord posorig;
+  int retval = 0;
 
   coord_set_yx (&posorig, f->pos.y, f->pos.x);
   compute_move (hero_pos, f);
@@ -229,8 +230,10 @@ update_foe_pos (const struct coord *hero_pos, struct foe *f)
       gfx_move_sprite (SP_FOE, &posorig, &f->pos);
       check_trap (f);
       check_hole (f);
-      if (coord_equal (&f->pos, hero_pos))
+      if (coord_equal (&f->pos, hero_pos)) {
         hero_die ();
+        retval = 1; /* signal reset of lists */
+      }
     }
   else
     {
@@ -244,6 +247,7 @@ update_foe_pos (const struct coord *hero_pos, struct foe *f)
         f->current_move == MOV_FALL ?
         MOV_NONE : coord_opposite_dir (f->current_move);
     }
+  return retval;
 }
 
 void
@@ -268,8 +272,8 @@ foes_update_pos (void)
 
       if (foe->state & STATE_TRAPPED)
         try_escape (foe);
-      else
-        update_foe_pos (&hero_pos, foe);
+      else if (update_foe_pos (&hero_pos, foe) > 0)
+        break;
     }
   timer_get_time (&foes_timer);
 }
