@@ -1,4 +1,6 @@
 /*  $Id: io.c,v 1.1.1.1 2010/07/17 17:30:32 culot Exp $  */
+/* vim: et ai sts=2 ts=2 sw=2:
+ * */
 
 /*
  * Copyright (c) 2010 Frederic Culot <frederic@culot.org>
@@ -40,14 +42,14 @@ FILE *
 io_fopen (const char *path)
 {
   FILE *f;
-  
+
   if (!(f = fopen (path, "r")))
     {
       ERROR_MSG ("Could not open game file \"%s\": %s",
                  path, strerror (errno));
       return 0;
     }
-  
+
   return f;
 }
 

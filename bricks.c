@@ -1,4 +1,6 @@
 /*  $Id: bricks.c,v 1.1.1.1 2010/07/17 17:30:32 culot Exp $  */
+/* vim: et ai sts=2 ts=2 sw=2:
+ * */
 
 /*
  * Copyright (c) 2010 Frederic Culot <frederic@culot.org>
@@ -65,7 +67,7 @@ bricks_free (void)
   while (!SLIST_EMPTY (&bricks))
     {
       struct brick *b;
-      
+
       b = SLIST_FIRST (&bricks);
       SLIST_REMOVE_HEAD (&bricks, bricksp);
       xfree (b);
@@ -118,7 +120,7 @@ void
 bricks_draw (void)
 {
   struct brick *b;
-  
+
   SLIST_FOREACH (b, &bricks, bricksp)
     draw_brick (&b->pos, b->state);
 }
@@ -127,13 +129,13 @@ unsigned
 bricks_broken_at (const struct coord *pos)
 {
   struct brick *b;
-  
+
   SLIST_FOREACH (b, &bricks, bricksp)
     {
       if (b->state == BRICK_BROKEN && coord_equal (&b->pos, pos))
         return 1;
     }
-  
+
   return 0;
 }
 

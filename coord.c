@@ -1,4 +1,6 @@
 /*  $Id: coord.c,v 1.1.1.1 2010/07/17 17:30:32 culot Exp $  */
+/* vim: et ai sts=2 ts=2 sw=2:
+ * */
 
 /*
  * Copyright (c) 2010 Frederic Culot <frederic@culot.org>
@@ -81,9 +83,9 @@ coord_compute (const struct coord *orig, enum move move, struct coord *dest)
       dest->y--;
       break;
     case MOV_DOWN:
-    case MOV_FALL:      
+    case MOV_FALL:
       dest->y++;
-      break;      
+      break;
     case MOV_LEFT:
       dest->x--;
       break;

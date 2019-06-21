@@ -1,4 +1,6 @@
 /*  $Id: gfx.c,v 1.2 2012/01/31 14:53:07 culot Exp $  */
+/* vim: et ai sts=2 ts=2 sw=2:
+ * */
 
 /*
  * Copyright (c) 2010 Frederic Culot <frederic@culot.org>
@@ -125,7 +127,7 @@ static void
 newpopup (struct window *pop)
 {
   const int BORDERWIDTH = 2;
-  
+
   pop->siz.w = scr.view.siz.w - 2 * BORDERWIDTH;
   pop->siz.h = scr.view.siz.h - 2 * BORDERWIDTH;
   pop->pos.y = scr.view.pos.y + BORDERWIDTH;
@@ -298,7 +300,7 @@ void
 gfx_game_over (void)
 {
   const char *rip =
-  "                   +-+                   \n" 
+  "                   +-+                   \n"
   "                  +-+-+-+                 \n"
   "                  +-+-+-+                 \n"
   "                    | |                   \n"

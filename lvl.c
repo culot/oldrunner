@@ -1,4 +1,6 @@
 /*  $Id: lvl.c,v 1.3 2012/01/31 14:36:29 culot Exp $  */
+/* vim: et ai sts=2 ts=2 sw=2:
+ * */
 
 /*
  * Copyright (c) 2010, 2012 Frederic Culot <frederic@culot.org>
@@ -35,7 +37,7 @@
 #include "oldrunner.h"
 
 struct lvlattr {
-  struct size    siz;  
+  struct size    siz;
   char          *name;
   char          *author;
 };
@@ -52,27 +54,27 @@ struct level {
 static struct level    *curlvl;
 
 static enum sprite char2sprite[256] = {
-  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-  
-/*   !  "     #          $     %    &     '  (  )  *  +  ,     -     .  / */  
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+
+/*   !  "     #          $     %    &     '  (  )  *  +  ,     -     .  / */
   0, 0, 0, SP_BRICK, SP_MONEY, 0, SP_FOE, 0, 0, 0, 0, 0, 0, SP_ROPE, 0, 0,
-  
-/*0  1  2  3  4  5  6  7  8  9  :  ;  <  =  >  ? */  
+
+/*0  1  2  3  4  5  6  7  8  9  :  ;  <  =  >  ? */
   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-  
-/*   @     A  B  C  D  E  F  G      H      I  J  K  L  M  N  O */  
+
+/*   @     A  B  C  D  E  F  G      H      I  J  K  L  M  N  O */
   SP_HERO, 0, 0, 0, 0, 0, 0, 0, SP_LADDER, 0, 0, 0, 0, 0, 0, 0,
-  
-/*P  Q  R  S  T  U        V        W      X      Y  Z  [  \  ]  ^  _ */  
+
+/*P  Q  R  S  T  U        V        W      X      Y  Z  [  \  ]  ^  _ */
   0, 0, 0, 0, 0, 0, SP_FAKE_BRICK, 0, SP_CIMENT, 0, 0, 0, 0, 0, 0, 0,
-  
-/*`  a  b  c  d  e  f  g  h  i  j  k  l  m  n  o */  
+
+/*`  a  b  c  d  e  f  g  h  i  j  k  l  m  n  o */
   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-  
-/*p  q  r  s  t  u  v  w  x  y  z  {          |         }  ~    */  
+
+/*p  q  r  s  t  u  v  w  x  y  z  {          |         }  ~    */
   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, SP_ESCAPE_LADDER, 0, 0, 0,
-  
+
   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -120,7 +122,7 @@ static void
 init_layout (struct level *l)
 {
   int i;
-  
+
   l->lay = xcalloc (l->attr.siz.h, sizeof (char *));
   for (i = 0; i < l->attr.siz.h; i++)
     l->lay[i] = xmalloc (l->attr.siz.w);
@@ -174,7 +176,7 @@ lvl_set_size (char *sizstr)
   if (!(y = strchr (sizstr, 'x')))
     return 0;
   *y++ = '\0';
-  
+
   sizex = strtonum (x, 0, LEVEL_MAX_WIDTH, &errstr);
   if (errstr)
     return 0;
@@ -205,9 +207,9 @@ lvl_set_row (int rownum, int rowlen, const char *row)
     }
   if (!curlvl->lay)
     init_layout (curlvl);
-  
+
   memcpy (curlvl->lay[rownum], row, rowlen);
-  
+
   return 1;
 }
 
@@ -237,7 +239,7 @@ lvl_add_new (void)
 
   return 1;
 }
-             
+
 void
 lvl_init (void)
 {
@@ -262,7 +264,7 @@ lvl_load_dynaobjs (void)
   int r, c;
 
   dynaobj_free ();
-    
+
   for (r = 0; r < curlvl->attr.siz.h; r++)
     {
       lvlpos.y = r;
@@ -311,7 +313,7 @@ draw_static_objects (void)
       for (c = 0; c < curlvl->attr.siz.w; c++)
         {
           enum sprite sp;
-          
+
           pos.x = c;
           sp = sprite_at_pos (&pos);
           gfx_show_sprite (obj_is_static[sp] ? sp : SP_NONE, &pos);
@@ -354,7 +356,7 @@ load_level (void)
   lvl_load_dynaobjs ();
   lvl_update_new ();
   hero_init ();
-  show_level_info ();  
+  show_level_info ();
 }
 
 static void
@@ -364,7 +366,7 @@ lvl_select_current (int lvlnum)
   while (lvlnum)
     {
       curlvl = TAILQ_NEXT (curlvl, levelsp);
-      EXIT_IF (curlvl == 0, "lvl_select_current: invalid level number");      
+      EXIT_IF (curlvl == 0, "lvl_select_current: invalid level number");
       lvlnum--;
     }
 }
@@ -375,7 +377,7 @@ lvl_load (int levelnum)
 {
   lvl_select_current (levelnum);
   load_level ();
-  
+
   return 1;
 }
 
@@ -384,9 +386,9 @@ lvl_load_next (void)
 {
   if (!(curlvl = TAILQ_NEXT (curlvl, levelsp)))
     game_won ();
-  game_level_inc ();  
+  game_level_inc ();
   load_level ();
-  
+
   return 1;
 }
 
@@ -394,14 +396,14 @@ unsigned
 lvl_load_prev (void)
 {
   struct level *previous_lvl;
-  
+
   if (!(previous_lvl = TAILQ_PREV (curlvl, levels_head, levelsp)))
     return 0;
 
   curlvl = previous_lvl;
-  game_level_dec ();  
+  game_level_dec ();
   load_level ();
-  
+
   return 1;
 }
 
@@ -449,7 +451,7 @@ valid_decor_move (const struct coord *pos_orig, const struct coord *pos_dest,
 
   if (pos_dest->y < 0 && sp_orig == SP_ESCAPE_LADDER)
     return 1;
-  
+
   sp_dest = lvl_decor_at_pos (pos_dest);
   switch (sp_dest)
     {
@@ -462,19 +464,19 @@ valid_decor_move (const struct coord *pos_orig, const struct coord *pos_dest,
 
     case SP_BRICK:
       return wanted_move != MOV_UP && bricks_broken_at (pos_dest) ? 1 : 0;
-      
+
     case SP_CIMENT:
       return 0;
-      
+
     case SP_LADDER:
       return wanted_move == MOV_FALL ? 0 : 1;
-      
+
     case SP_ESCAPE_LADDER:
       if (sp == SP_HERO)
         return wanted_move == MOV_FALL ? 0 : 1;
       else
         return wanted_move == MOV_UP ? 0 : 1;
-      
+
     default:
       return 0;
       /* NOTREACHED */
@@ -492,7 +494,7 @@ lvl_valid_move (const struct coord *orig, enum move wanted_move,
   if (dest->y >= (int)curlvl->attr.siz.h
       || dest->x < 0 || dest->x >= curlvl->attr.siz.w)
     return 0;
-  
+
   return valid_decor_move (orig, dest, wanted_move, sp);
 }
 
@@ -521,7 +523,7 @@ unsigned
 lvl_obstacle_at (const struct coord *pos)
 {
   enum sprite sp;
-  
+
   if (pos->y < 0 || pos->x < 0
       || pos->y > curlvl->attr.siz.h || pos->x > curlvl->attr.siz.w)
     return 1;
@@ -535,7 +537,7 @@ lvl_objects_update (void)
 {
   bricks_update ();
   bricks_draw ();
-  money_draw ();  
+  money_draw ();
   foes_update_pos ();
 }
 
@@ -571,7 +573,7 @@ got_way (const struct coord *orig,
                     pos.y + (wanted_dir == MOV_UP ? -1 : 1), pos.x);
       if (valid_decor_move (&pos, &wanted_pos, wanted_dir, SP_NONE))
         return 1;
-      
+
       pos.x += prefered_move == MOV_RIGHT ? 1 : -1;
     }
 
@@ -583,7 +585,7 @@ lvl_shortest_way (const struct coord *orig,
                   enum move wanted_dir, enum move prefered_move)
 {
   struct coord dest;
-  
+
   if (lvl_valid_move (orig, wanted_dir, &dest, SP_NONE))
     return wanted_dir;
   else

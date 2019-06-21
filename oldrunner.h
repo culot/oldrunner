@@ -1,4 +1,6 @@
 /*  $Id: oldrunner.h,v 1.2 2012/01/06 10:11:30 culot Exp $  */
+/* vim: et ai sts=2 ts=2 sw=2:
+ * */
 
 /*
  * Copyright (c) 2010, 2012 Frederic Culot <frederic@culot.org>
@@ -70,10 +72,10 @@ enum sprite {
   SP_LADDER,
   SP_ROPE,
   SP_ESCAPE_LADDER,
-  
+
   /* Sprites used for objects. */
   SP_MONEY,
-  
+
   /* Sprites used to draw characters. */
   SP_HERO,
   SP_FOE,
@@ -92,7 +94,7 @@ enum move {
 };
 
 struct size {
-  unsigned  h; /* height */  
+  unsigned  h; /* height */
   unsigned  w; /* width */
 };
 
@@ -112,13 +114,13 @@ struct usr_input {
 };
 
 struct game_info {
-#define  NO_CHANGE     0x0  
+#define  NO_CHANGE     0x0
 #define  LEVEL_CHANGE  0x1
 #define  SCORE_CHANGE  0x2
-#define  LIVES_CHANGE  0x4  
+#define  LIVES_CHANGE  0x4
   int       state;
-  
-  unsigned  level;  
+
+  unsigned  level;
   unsigned  score;
   unsigned  lives;
 };

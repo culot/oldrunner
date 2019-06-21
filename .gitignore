@@ -1,0 +1,4 @@
+*.o
+/config.h
+/config.mk
+/oldrunner

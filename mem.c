@@ -1,4 +1,6 @@
 /*  $Id: mem.c,v 1.1.1.1 2010/07/17 17:30:32 culot Exp $  */
+/* vim: et ai sts=2 ts=2 sw=2:
+ * */
 
 /*
  * Copyright (c) 2010 Frederic Culot <frederic@culot.org>
@@ -40,7 +42,7 @@ void *
 xmalloc (size_t size)
 {
   void *p;
-  
+
   EXIT_IF (size == 0, "xmalloc: zero size");
   p = malloc (size);
   EXIT_IF (p == 0, "xmalloc: out of memory");

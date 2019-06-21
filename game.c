@@ -1,4 +1,6 @@
 /*  $Id: game.c,v 1.1.1.1 2010/07/17 17:30:32 culot Exp $  */
+/* vim: et ai sts=2 ts=2 sw=2:
+ * */
 
 /*
  * Copyright (c) 2010 Frederic Culot <frederic@culot.org>
@@ -51,7 +53,7 @@ static void
 game_lost (void)
 {
   struct usr_input input;
-  
+
   gfx_game_over ();
   gfx_get_input (&input);
   game_end ();
@@ -61,7 +63,7 @@ void
 game_won (void)
 {
   struct usr_input input;
-  
+
   gfx_game_won ();
   gfx_get_input (&input);
   game_end ();
@@ -75,7 +77,7 @@ game_init (int startlvl)
     EXIT ("Could not load game levels. Aborting...");
   ginfo.lives = LIVES_AT_START;
   ginfo.level = startlvl + 1;
-  gfx_init ();  
+  gfx_init ();
   lvl_load (startlvl);
   hero_init ();
   game_update ();
@@ -92,12 +94,12 @@ set_view (void)
 
   lvl.w = lvl_width ();
   lvl.h = lvl_height ();
-  
+
   if (AUTO_CENTER_MODE || lvl.h > VIEWPORT_HEIGHT || lvl.w > VIEWPORT_WIDTH)
     {
       struct coord player_pos;
 
-      hero_get_pos (&player_pos);      
+      hero_get_pos (&player_pos);
       gfx_center_at (&player_pos);
     }
   else
@@ -135,7 +137,7 @@ read_level_row (char *row, unsigned rownum)
 {
   char *rowend;
   int len;
-  
+
   if (*row != '[')
     return 0;
   row++;
@@ -144,7 +146,7 @@ read_level_row (char *row, unsigned rownum)
     return 0;
   *rowend = '\0';
   len = rowend - row;
-  
+
   return lvl_set_row (rownum, len, row);
 }
 
@@ -201,7 +203,7 @@ game_load (const char *path)
   FILE *f;
   char *buf;
   unsigned rownum, newlevel;
-  
+
   if (!(f = io_fopen (LEVELS)))
     return 0;
 
@@ -219,12 +221,12 @@ game_load (const char *path)
             rownum = 0;                         \
           }                                     \
     } while (0)
-      
+
       /* Remove trailing spaces. */
       p = buf;
       while (isblank ((int)(*p)))
         p++;
-      
+
       switch (*p)
         {
         case '[':
@@ -244,8 +246,8 @@ game_load (const char *path)
           read_level_attr (p);
           break;
         }
-      
-#undef CHK_NEW_LVL      
+
+#undef CHK_NEW_LVL
     }
 
   io_fclose (f);
@@ -276,14 +278,14 @@ game_level_inc (void)
 void
 game_level_dec (void)
 {
-  ginfo.state |= LEVEL_CHANGE;  
+  ginfo.state |= LEVEL_CHANGE;
   ginfo.level--;
 }
 
 void
 game_lives_inc (void)
 {
-  ginfo.state |= LIVES_CHANGE;  
+  ginfo.state |= LIVES_CHANGE;
   ginfo.lives++;
 }
 

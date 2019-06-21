@@ -1,4 +1,6 @@
 /*  $Id: hero.c,v 1.1.1.1 2010/07/17 17:30:32 culot Exp $  */
+/* vim: et ai sts=2 ts=2 sw=2:
+ * */
 
 /*
  * Copyright (c) 2010 Frederic Culot <frederic@culot.org>
@@ -117,10 +119,10 @@ hero_move (enum move move)
   /* First check if the move is valid with regards to current player state. */
   if (hero.state & STATE_DIGGING)
     return;
-    
+
   if ((hero.state & STATE_FALLING) && (move != MOV_FALL))
     move = MOV_FALL;
-  
+
   /* Then check if the move is valid with regards to the level layout. */
   hero_get_pos (&orig);
   if (!lvl_valid_move (&orig, move, &dest, SP_HERO))
@@ -131,10 +133,10 @@ hero_move (enum move move)
     }
   else
     hero_set_pos (&dest);
-  
+
   if (move == MOV_FALL || lvl_nothing_below (&hero.pos))
     hero.state |= STATE_FALLING;
-  
+
   gfx_move_sprite (SP_HERO, &orig, &hero.pos);
   check_collisions (&hero.pos);
 }
@@ -183,6 +185,6 @@ hero_wallup_at (const struct coord *pos)
       hero_die ();
       return 1;
     }
-  
+
   return 0;
 }
