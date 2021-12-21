@@ -69,6 +69,21 @@ SRCS+= compat/fgetln.c  \
 EOF
 	;;
 # ------------------------------------------------------------------------------
+    Darwin)
+	cat <<EOF >>$CONFIG_H
+#define HAVE_NCURSES_H
+#define HAVE_BZERO
+#define HAVE_SNPRINTF
+#define HAVE_GETOPT
+EOF
+	cat <<EOF >>$CONFIG_MK
+CFLAGS+= -std=c99 -D_GNU_SOURCE -D_POSIX_SOURCE
+LIBS+= -lncurses
+SRCS+= compat/fgetln.c  \
+       compat/strtonum.c
+EOF
+	;;
+# ------------------------------------------------------------------------------
     *)
 	echo Unable to configure for $OLDRUNNER_PLATFORM
 	exit 1

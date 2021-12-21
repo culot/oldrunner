@@ -43,6 +43,8 @@
 
 #ifndef HAVE_BZERO
 #  define bzero(buf, len) memset ((buf), 0, (len));
+#else
+void bzero(void *s, size_t n);
 #endif
 
 #ifndef HAVE_STRTONUM
@@ -53,6 +55,14 @@ long long	 strtonum (const char *, long long, long long, const char **);
 #ifndef HAVE_FGETLN
 /* fgetln.c */
 char   *fgetln (FILE *, size_t *);
+#endif
+
+#ifdef HAVE_SNPRINTF
+int	snprintf(char *restrict s, size_t n, const char *restrict format, ...);
+#endif
+
+#ifdef HAVE_GETOPT
+#  include <getopt.h>
 #endif
 
 #endif /* COMPAT_H */
